@@ -1,7 +1,8 @@
 const express  = require('express');
 const app = express();
-const io = require('socket-io');
 const body_parser= require('body-parser');
+const socket = require('socket.io');
+
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -13,5 +14,14 @@ app.get('/',(req,res)=>{
 
 });
 
-app.listen('3000', ()=> console.log("Server Started"));
+const server = app.listen('3000', ()=> console.log("Server Started"));
 
+
+// socket Setup
+
+const io = socket(server);
+
+io.on ('connection',(socket)=>{
+	console.log('made Socket Connection');
+	console.log(socket);
+});
